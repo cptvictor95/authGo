@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -9,35 +8,10 @@ import (
 )
 
 func main() {
+	// Register the main route /api with all subtree routes
 	api.CreateRoutes()
-	// Second hello world on another thread
-	go func ()  {
-		http.HandleFunc("/api/hello", func(w http.ResponseWriter, r *http.Request) {
-			name := "world"
-			fmt.Fprintf(w, "Hello, %s!", name)
-		})
-		resp, err := http.Get("http://localhost:4200/hello")
-
-		// body, err := ioutil.ReadAll(resp.Body)
-
-		// fmt.Println(string(body))
-		
-		body := make([]byte, 420)
-		
-		bodySize, err := resp.Body.Read(body)
-		if err != nil {
-			fmt.Println(err)
-
-			return
-		}
-		
-		fmt.Println(resp.Status)
-		
-		fmt.Println(string(body[:bodySize]))
-		
-		fmt.Println(err)
-	}()
-
+	
+	// Start the server with listener and logger
 	bootstrap()
 }
 
