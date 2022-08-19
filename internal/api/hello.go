@@ -10,14 +10,18 @@ func HelloRoute() {
 	http.HandleFunc("/api/hello/", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 		
-		name, exists := query["name"]
-
-		if !exists || len(name) == 0 {
-			fmt.Printf("Name parameter not found. Try again.")
+		name := query.Get("name")
+		exists := query.Has("name")
+		if exists && name == "" {
+			fmt.Printf("Name parameter cannot be empty. Try again.")
 
 			return
 		}
 
-		fmt.Fprintf(w, "Hello, %s!", name[0])
+		if !exists {
+			name = "world"
+		}
+		
+		fmt.Fprintf(w, "Hello, %s!", name)
 	})
 }
