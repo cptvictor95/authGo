@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// HelloRoute Registers the dummy route for testing and playing with new knowledge
+// HelloRoute Registers the dummy route for with an optional query parameter for the hello world!
 func HelloRoute() {
 	http.HandleFunc("/api/hello/", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
