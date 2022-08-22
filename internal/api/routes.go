@@ -7,15 +7,23 @@ import (
 
 // CreateRoutes Registers every route on the api, starting with /api
 func CreateRoutes() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "OK")
-	})
-	// Main API route
-	http.HandleFunc("/api/", printServerStarted)
+	// Root route
+	http.HandleFunc("/", printRootRouteWorking)
 
+	// Main API route
+	http.HandleFunc("/api/", printMainRouteWorking)
+
+	// Users API route
+	UsersRoute()
+
+	// Dummy route to serve as a playground for test implementations
 	HelloRoute()
 }
 
-func printServerStarted(w http.ResponseWriter, r *http.Request)  {
+func printMainRouteWorking(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprintf(w, "Auth server is ON!")
+}
+
+func printRootRouteWorking(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "OK")
 }
